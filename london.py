@@ -403,4 +403,23 @@ def airport_emission(location):
 
     print(df_big)
 
-airport_emission(location="Paris")
+
+    # Totale uitstoot per jaar berekenen
+    total_density_2020 = df_2020['Density'].sum()
+    total_density_2021 = df_2021['Density'].sum()
+    total_density_2023 = df_2023['Density'].sum()
+    total_density_2024 = df_2024['Density'].sum()
+
+    # Overzicht maken
+    total_emissions = {
+        'Year': [2020, 2021, 2023, 2024],
+        'Total NO2 Emission': [total_density_2020, total_density_2021, total_density_2023, total_density_2024]
+    }
+
+    # Pandas DataFrame maken voor overzicht
+    df_total_emissions = pd.DataFrame(total_emissions)
+
+    print(df_total_emissions)
+    
+
+airport_emission(location="London")
