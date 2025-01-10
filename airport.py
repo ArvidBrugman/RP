@@ -908,4 +908,4 @@ def airport_emission(location):
 
     # print(netto_monthly_avg_2020)
 
-airport_emission(location="Atlanta")
+airport_emission(location="Paris")
