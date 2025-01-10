@@ -514,4 +514,4 @@ def airport_emission(location):
     print(df_total_emissions)
     
 
-airport_emission(location="London")
+airport_emission(location="Atlanta")
