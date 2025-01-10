@@ -805,17 +805,8 @@ def airport_emission(location):
                     if len(parts_2024_background) < 1:
                         pass
 
-    #print(date_density_list_2024_background)
-    # Print de lijst met densities_2024
-    #print("densities_2024:", densities_2024, "Dates:", date)
-
-
     dates_2024_background = [item[0] for item in date_density_list_2024_background]  # Haal de datum uit elk element
     densities_2024_background = [float(item[1]) for item in date_density_list_2024_background if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # # Print de twee lijsten
-    # print("Dates:", dates_2024_background)
-    # print("densities_2024:", densities_2024_background)
 
     densities_2024_background_2  = []
     date_density_list_2024_background_2 = []
@@ -855,9 +846,6 @@ def airport_emission(location):
     for x in densities_2024_background:
         x = x / 1000000000
         densities_calculated_2024_background.append(x)
-
-
-
 
 
 
@@ -952,7 +940,7 @@ def airport_emission(location):
     plt.plot(months_axis, monthly_avg_2024['Density'], 'o-',label='Average NO₂ 2024')
     plt.xlabel('Date (Month-Year)')
     plt.ylabel('Average NO₂ Density (mol/m²)')
-    plt.title(f'(Heathrow {location} average monthly NO₂ density)')
+    plt.title(f'{location} average monthly NO₂ density of the airport')
 
     # Voeg de legenda toe
     plt.legend(loc='upper left')
@@ -967,7 +955,7 @@ def airport_emission(location):
     plt.plot(months_axis, netto_monthly_avg_2024, 'o-',label='Average NO₂ 2024')
     plt.xlabel('Date (Month-Year)')
     plt.ylabel('Average NO₂ Density (mol/m²)')
-    plt.title(f'(Heathrow {location} average monthly NO₂ density)')
+    plt.title(f'{location} average monthly NO₂ density of the airport, no background')
 
     # Voeg de legenda toe
     plt.legend(loc='upper left')
@@ -975,13 +963,11 @@ def airport_emission(location):
     plt.tight_layout()
     plt.show()
 
-
     df_big = pd.concat([df_2019, df_2020, df_2021, df_2023, df_2024])
+    plt.figure(figsize=(15, 7))
     sns.boxplot(df_big, x='month' , y="Density", hue="year")
+    plt.title(f'{location} average monthly NO₂ density of the airport')
     plt.show()
-
-   # print(df_big)
-
 
     # Totale uitstoot per jaar berekenen
     total_density_2019 = df_2019['Density'].sum()
