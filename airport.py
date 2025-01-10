@@ -41,17 +41,8 @@ def airport_emission(location):
                     if len(parts_2019) < 1:
                         pass
 
-    #print(date_density_list_2019)
-
-
     dates_2019 = [item[0] for item in date_density_list_2019]  # Haal de datum uit elk element
     densities_2019 = [float(item[1]) for item in date_density_list_2019 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2019)
-    #print("densities_2019:", densities_2019)
-
-
 
     densities_2019_2  = []
     date_density_list_2019_2 = []
@@ -125,17 +116,8 @@ def airport_emission(location):
                     if len(parts_2020) < 1:
                         pass
 
-    #print(date_density_list_2020)
-
-
     dates_2020 = [item[0] for item in date_density_list_2020]  # Haal de datum uit elk element
     densities_2020 = [float(item[1]) for item in date_density_list_2020 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2020)
-    #print("densities_2020:", densities_2020)
-
-
 
     densities_2020_2  = []
     date_density_list_2020_2 = []
@@ -208,17 +190,8 @@ def airport_emission(location):
                     if len(parts_2021) < 1:
                         pass
 
-    #print(date_density_list_2021)
-
-
     dates_2021 = [item[0] for item in date_density_list_2021]  # Haal de datum uit elk element
     densities_2021 = [float(item[1]) for item in date_density_list_2021 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2021)
-    #print("densities_2021:", densities_2021)
-
-
 
     densities_2021_2  = []
     date_density_list_2021_2 = []
@@ -291,17 +264,8 @@ def airport_emission(location):
                     if len(parts_2023) < 1:
                         pass
 
-    #print(date_density_list_2023)
-
-
     dates_2023 = [item[0] for item in date_density_list_2023]  # Haal de datum uit elk element
     densities_2023 = [float(item[1]) for item in date_density_list_2023 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2023)
-    #print("densities_2023:", densities_2023)
-
-
 
     densities_2023_2  = []
     date_density_list_2023_2 = []
@@ -375,17 +339,8 @@ def airport_emission(location):
                     if len(parts_2024) < 1:
                         pass
 
-    #print(date_density_list_2024)
-    # Print de lijst met densities_2024
-    #print("densities_2024:", densities_2024, "Dates:", date)
-
-
     dates_2024 = [item[0] for item in date_density_list_2024]  # Haal de datum uit elk element
     densities_2024 = [float(item[1]) for item in date_density_list_2024 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2024)
-    #print("densities_2024:", densities_2024)
 
     densities_2024_2  = []
     date_density_list_2024_2 = []
@@ -429,16 +384,6 @@ def airport_emission(location):
 
 
 
-
-
-
-
-
-
-
-
-
-
 #2020 jaar BACKGROUND
     # Lijst om de density-waarden op te slaan
     densities_2019_background = []
@@ -471,17 +416,8 @@ def airport_emission(location):
                     if len(parts_2019_background) < 1:
                         pass
 
-   # print(date_density_list_2019_background)
-
-
     dates_2019_background = [item[0] for item in date_density_list_2019_background]  # Haal de datum uit elk element
     densities_2019_background = [float(item[1]) for item in date_density_list_2019_background if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2019_background)
-    #print("densities_2019_background:", densities_2019_background)
-
-
 
     densities_2019_background_2  = []
     date_density_list_2019_background_2 = []
@@ -555,17 +491,8 @@ def airport_emission(location):
                     if len(parts_2020_background) < 1:
                         pass
 
-   # print(date_density_list_2020_background)
-
-
     dates_2020_background = [item[0] for item in date_density_list_2020_background]  # Haal de datum uit elk element
     densities_2020_background = [float(item[1]) for item in date_density_list_2020_background if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2020_background)
-    #print("densities_2020_background:", densities_2020_background)
-
-
 
     densities_2020_background_2  = []
     date_density_list_2020_background_2 = []
@@ -638,17 +565,8 @@ def airport_emission(location):
                     if len(parts_2021_background) < 1:
                         pass
 
-    #print(date_density_list_2021_background)
-
-
     dates_2021_background = [item[0] for item in date_density_list_2021_background]  # Haal de datum uit elk element
     densities_2021_background = [float(item[1]) for item in date_density_list_2021_background if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2021_background)
-    #print("densities_2021_background:", densities_2021_background)
-
-
 
     densities_2021_background_2  = []
     date_density_list_2021_background_2 = []
@@ -721,17 +639,8 @@ def airport_emission(location):
                     if len(parts_2023_background) < 1:
                         pass
 
-    print(date_density_list_2023_background)
-
-
     dates_2023_background = [item[0] for item in date_density_list_2023_background]  # Haal de datum uit elk element
     densities_2023_background = [float(item[1]) for item in date_density_list_2023_background if item[1] != ""]  # Haal de density uit elk element en zet om naar float
-
-    # Print de twee lijsten
-    #print("Dates:", dates_2023_background)
-    #print("densities_2023_background:", densities_2023_background)
-
-
 
     densities_2023_background_2  = []
     date_density_list_2023_background_2 = []
