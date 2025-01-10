@@ -758,6 +758,59 @@ def airport_emission(location):
 
 
 
+
+#TEMPERATUUR
+#2019 jaar
+    # Lees het CSV-bestand
+    temperatures = []
+    parts_list = []
+    with open(f'{location}_temperature.csv', mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            
+            # Zorg ervoor dat je geen lege rijen hebt
+            if len(row) > 0:
+                date_temperature = row[0].strip()  # Verwijder eventuele extra spaties aan het begin of einde van de string
+                if '""' in date_temperature:
+                    pass
+                else:
+                    # Als '""' niet in de string staat, splits dan op basis van de enkele dubbele aanhalingstekens
+                    parts_date_temp = date_temperature.split('"')
+                    if len(parts_date_temp) > 1:  # Zorg ervoor dat er een waarde na de datum is
+                        #print(f"Parts after alternative split: {parts}")
+                        date = parts_date_temp[0]
+                        temp = parts_date_temp[1].strip()  # De waarde na de datum
+                
+                        try:
+                            temperatures.append(float(temp))  # Zet de density om naar een float
+                        except ValueError:
+                            print(f"Fout bij het converteren van temp: {temp}")
+                        parts_list.append(parts_date_temp)
+                        
+                    if len(parts_list) < 1:
+                        pass
+
+    date = [item[0] for item in parts_list]  # Haal de datum uit elk element
+    temperatures = [float(item[1]) for item in parts_list if item[1] != ""]  # Haal de density uit elk element en zet om naar float
+
+    temp_scaled = []
+    for k in temperatures:
+        k = (k / 1000000000) - 273.15
+        temp_scaled.append(k)
+    print(temp_scaled)
+
+
+
+
+
+
+
+
+
+
+
+
+
 #dataframes voor alle jaren
     # # Maak pandas DataFrame's voor de jaren 2020 en 2024
     df_2019 = pd.DataFrame({'Date': dates_2019, 'Density': densities_calculated_2019})
@@ -790,7 +843,6 @@ def airport_emission(location):
     df_netto_2021 = df_2021['Density'] - df_2021_background['Density']
     df_netto_2023 = df_2023['Density'] - df_2023_background['Density']
     df_netto_2024 = df_2024['Density'] - df_2024_background['Density']
-    print(df_netto_2019)
 
 
     #maanden aanmaken
@@ -832,8 +884,6 @@ def airport_emission(location):
     df_netto_2024= df_2024-df_2024_background
     df_netto_2024['month'] = df_netto_2024.index.month.astype(int)
     df_netto_2024['year'] = df_netto_2024.index.year.astype(int)
-
-    print(df_netto_2019)
 
     #jaar dataframes aanmaken
     df_2019['year']= 2019
@@ -940,11 +990,26 @@ def airport_emission(location):
     # Pandas DataFrame maken voor overzicht
     df_total_emissions = pd.DataFrame(total_emissions)
 
+    months_axis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    months_axis2 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov']
 
-    #print(df_total_emissions)
+    maanden_2019 = temp_scaled[0:12]
+    maanden_2020 = temp_scaled[12:24]
+    maanden_2021 = temp_scaled[24:36]
+    maanden_2023 = temp_scaled[36:48]
+    maanden_2024 = temp_scaled[48:60]
 
-    # print(netto_monthly_avg_2020)
-    print(df_2019)
-    
+
+    print(maanden_2019)
+
+    plt.plot(months_axis, maanden_2019, 'o-',label='Temperature 2019')
+    plt.plot(months_axis, maanden_2020, 'o-',label='Temperature 2020')
+    plt.plot(months_axis, maanden_2021, 'o-',label='Temperature 2021')
+    plt.plot(months_axis, maanden_2023, 'o-',label='Temperature 2023')
+    plt.plot(months_axis2, maanden_2024, 'o-',label='Temperature 2024')
+    plt.legend(loc = 'upper left')
+    plt.title(f'{location} temperature over the years')
+    plt.savefig(f'{location}_temperature.png')
+    plt.show()
 
 airport_emission(location="Paris")
