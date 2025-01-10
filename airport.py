@@ -864,7 +864,7 @@ def airport_emission(location):
     plt.plot(months_axis, netto_monthly_avg_2024, 'o-',label='Average NO₂ 2024')
     plt.xlabel('Date (Month-Year)')
     plt.ylabel('Average NO₂ Density (mol/m²)')
-    plt.title(f'{location} average monthly NO₂ density of the airport, no background')
+    plt.title(f'{location} average monthly NO₂ density of the airport - No background')
 
     # Voeg de legenda toe
     plt.legend(loc='upper left')
