@@ -783,6 +783,16 @@ def airport_emission(location):
     df_2023_background['Date'] = pd.to_datetime(df_2023_background['Date'])
     df_2024_background['Date'] = pd.to_datetime(df_2024_background['Date'])
 
+
+     #dataframes_netto maken
+    df_netto_2019 = df_2019 - df_2019_background
+    df_netto_2020 = df_2020['Density'] - df_2020_background['Density']
+    df_netto_2021 = df_2021['Density'] - df_2021_background['Density']
+    df_netto_2023 = df_2023['Density'] - df_2023_background['Density']
+    df_netto_2024 = df_2024['Density'] - df_2024_background['Density']
+    print(df_netto_2019)
+
+
     #maanden aanmaken
     df_2019['month']= df_2019['Date'].dt.month
     df_2020['month']= df_2020['Date'].dt.month
@@ -836,6 +846,7 @@ def airport_emission(location):
     df_2021_background['year']= 2021
     df_2023_background['year']= 2023
     df_2024_background['year']= 2024
+
 
     # # Bereken het maandgemiddelde van de NO₂-dichtheid
     monthly_avg_2019 = df_2019.resample('M').mean()
@@ -933,5 +944,7 @@ def airport_emission(location):
     #print(df_total_emissions)
 
     # print(netto_monthly_avg_2020)
+    print(df_2019)
+    
 
 airport_emission(location="Paris")
