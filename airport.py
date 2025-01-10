@@ -855,6 +855,7 @@ def airport_emission(location):
     plt.legend(loc='upper left')
 
     plt.tight_layout()
+    plt.savefig(f'{location}_NO₂.png')
     plt.show()
 
     plt.plot(months_axis, netto_monthly_avg_2019, 'o-',label='Average NO₂ 2019')
@@ -870,12 +871,14 @@ def airport_emission(location):
     plt.legend(loc='upper left')
 
     plt.tight_layout()
+    plt.savefig(f'{location}_avg_month_NO₂_nobackground.png')
     plt.show()
 
     df_big = pd.concat([df_2019, df_2020, df_2021, df_2023, df_2024])
     plt.figure(figsize=(15, 7))
     sns.boxplot(df_big, x='month' , y="Density", hue="year")
     plt.title(f'{location} average monthly NO₂ density of the airport')
+    plt.savefig(f'{location}_BP_avg_month_NO₂.png')
     plt.show()
 
     # Totale uitstoot per jaar berekenen
