@@ -7,6 +7,91 @@ import seaborn as sns
 from datetime import datetime
 
 def airport_emission(location):   
+
+    # Lijst om de density-waarden op te slaan
+    densities_2019 = []
+    date_density_list_2019 = []
+    dates_2019 = []
+
+
+#2019 jaar
+    # Lees het CSV-bestand
+    with open(f'{location}_2019_1.csv', mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            
+            # Zorg ervoor dat je geen lege rijen hebt
+            if len(row) > 0:
+                date_and_density_2019 = row[0].strip()  # Verwijder eventuele extra spaties aan het begin of einde van de string
+                if '""' in date_and_density_2019:
+                    pass
+                else:
+                    # Als '""' niet in de string staat, splits dan op basis van de enkele dubbele aanhalingstekens
+                    parts_2019 = date_and_density_2019.split('"')
+                    if len(parts_2019) > 1:  # Zorg ervoor dat er een waarde na de datum is
+                        #print(f"Parts after alternative split: {parts}")
+                        date_2019 = parts_2019[0]
+                        density_2019 = parts_2019[1].strip()  # De waarde na de datum
+                        try:
+                            densities_2019.append(float(density_2019))  # Zet de density om naar een float
+                        except ValueError:
+                            print(f"Fout bij het converteren van density: {density_2019}")
+                        date_density_list_2019.append(parts_2019)
+                        
+                    if len(parts_2019) < 1:
+                        pass
+
+    #print(date_density_list_2019)
+
+
+    dates_2019 = [item[0] for item in date_density_list_2019]  # Haal de datum uit elk element
+    densities_2019 = [float(item[1]) for item in date_density_list_2019 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
+
+    # Print de twee lijsten
+    #print("Dates:", dates_2019)
+    #print("densities_2019:", densities_2019)
+
+
+
+    densities_2019_2  = []
+    date_density_list_2019_2 = []
+    dates_2019_2 = []
+    with open(f'{location}_2019_2.csv', mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            
+            # Zorg ervoor dat je geen lege rijen hebt
+            if len(row) > 0:
+                date_and_density_2019_2 = row[0].strip()  # Verwijder eventuele extra spaties aan het begin of einde van de string
+                if '""' in date_and_density_2019_2:
+                    pass
+                else:
+                    # Als '""' niet in de string staat, splits dan op basis van de enkele dubbele aanhalingstekens
+                    parts_2019_2 = date_and_density_2019_2.split('"')
+                    if len(parts_2019_2) > 1:  # Zorg ervoor dat er een waarde na de datum is
+                        #print(f"Parts after alternative split: {parts}")
+                        date_2019_2 = parts_2019_2[0]
+                        density_2019_2 = parts_2019_2[1].strip()  # De waarde na de datum
+                        try:
+                            densities_2019_2.append(float(density_2019_2))  # Zet de density om naar een float
+                        except ValueError:
+                            print(f"Fout bij het converteren van density: {density_2019_2}")
+                        date_density_list_2019_2.append(parts_2019_2)
+                        
+                    if len(parts_2019_2) < 1:
+                        pass
+    dates_2019_2 = [item[0] for item in date_density_list_2019_2]  # Haal de datum uit elk element
+    densities_2019_2 = [float(item[1]) for item in date_density_list_2019_2 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
+
+
+    dates_2019.extend(dates_2019_2)
+    densities_2019.extend(densities_2019_2)
+
+    densities_calculated_2019 = []
+    for x in densities_2019:
+        x = x / 1000000000
+        densities_calculated_2019.append(x)
+
     # Lijst om de density-waarden op te slaan
     densities_2020 = []
     date_density_list_2020 = []
@@ -354,7 +439,88 @@ def airport_emission(location):
 
 
 
+#2020 jaar BACKGROUND
+    # Lijst om de density-waarden op te slaan
+    densities_2019_background = []
+    date_density_list_2019_background = []
+    dates_2019_background = []
 
+    # Lees het CSV-bestand
+    with open(f'{location}_2019_1_background.csv', mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            
+            # Zorg ervoor dat je geen lege rijen hebt
+            if len(row) > 0:
+                date_and_density_2019_background = row[0].strip()  # Verwijder eventuele extra spaties aan het begin of einde van de string
+                if '""' in date_and_density_2019_background:
+                    pass
+                else:
+                    # Als '""' niet in de string staat, splits dan op basis van de enkele dubbele aanhalingstekens
+                    parts_2019_background = date_and_density_2019_background.split('"')
+                    if len(parts_2019_background) > 1:  # Zorg ervoor dat er een waarde na de datum is
+                        #print(f"Parts after alternative split: {parts}")
+                        date_2019_background = parts_2019_background[0]
+                        density_2019_background = parts_2019_background[1].strip()  # De waarde na de datum
+                        try:
+                            densities_2019_background.append(float(density_2019_background))  # Zet de density om naar een float
+                        except ValueError:
+                            print(f"Fout bij het converteren van density: {density_2019_background}")
+                        date_density_list_2019_background.append(parts_2019_background)
+                        
+                    if len(parts_2019_background) < 1:
+                        pass
+
+   # print(date_density_list_2019_background)
+
+
+    dates_2019_background = [item[0] for item in date_density_list_2019_background]  # Haal de datum uit elk element
+    densities_2019_background = [float(item[1]) for item in date_density_list_2019_background if item[1] != ""]  # Haal de density uit elk element en zet om naar float
+
+    # Print de twee lijsten
+    #print("Dates:", dates_2019_background)
+    #print("densities_2019_background:", densities_2019_background)
+
+
+
+    densities_2019_background_2  = []
+    date_density_list_2019_background_2 = []
+    dates_2019_background_2 = []
+    with open(f'{location}_2019_2_background.csv', mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            
+            # Zorg ervoor dat je geen lege rijen hebt
+            if len(row) > 0:
+                date_and_density_2019_background_2 = row[0].strip()  # Verwijder eventuele extra spaties aan het begin of einde van de string
+                if '""' in date_and_density_2019_background_2:
+                    pass
+                else:
+                    # Als '""' niet in de string staat, splits dan op basis van de enkele dubbele aanhalingstekens
+                    parts_2019_background_2 = date_and_density_2019_background_2.split('"')
+                    if len(parts_2019_background_2) > 1:  # Zorg ervoor dat er een waarde na de datum is
+                        #print(f"Parts after alternative split: {parts}")
+                        date_2019_background_2 = parts_2019_background_2[0]
+                        density_2019_background_2 = parts_2019_background_2[1].strip()  # De waarde na de datum
+                        try:
+                            densities_2019_background_2.append(float(density_2019_background_2))  # Zet de density om naar een float
+                        except ValueError:
+                            print(f"Fout bij het converteren van density: {density_2019_background_2}")
+                        date_density_list_2019_background_2.append(parts_2019_background_2)
+                        
+                    if len(parts_2019_background_2) < 1:
+                        pass
+    dates_2019_background_2 = [item[0] for item in date_density_list_2019_background_2]  # Haal de datum uit elk element
+    densities_2019_background_2 = [float(item[1]) for item in date_density_list_2019_background_2 if item[1] != ""]  # Haal de density uit elk element en zet om naar float
+
+
+    dates_2019_background.extend(dates_2019_background_2)
+    densities_2019_background.extend(densities_2019_background_2)
+
+    densities_calculated_2019_background = []
+    for x in densities_2019_background:
+        x = x / 1000000000
+        densities_calculated_2019_background.append(x)
 
 
 #2020 jaar BACKGROUND
