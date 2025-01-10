@@ -697,40 +697,48 @@ def airport_emission(location):
 
 #dataframes voor alle jaren
     # # Maak pandas DataFrame's voor de jaren 2020 en 2024
+    df_2019 = pd.DataFrame({'Date': dates_2019, 'Density': densities_calculated_2019})
     df_2020 = pd.DataFrame({'Date': dates_2020, 'Density': densities_calculated_2020})
     df_2021 = pd.DataFrame({'Date': dates_2021, 'Density': densities_calculated_2021})
     df_2023 = pd.DataFrame({'Date': dates_2023, 'Density': densities_calculated_2023})
     df_2024 = pd.DataFrame({'Date': dates_2024, 'Density': densities_calculated_2024})
+    df_2019_background = pd.DataFrame({'Date': dates_2019_background, 'Density': densities_calculated_2019_background})
     df_2020_background = pd.DataFrame({'Date': dates_2020_background, 'Density': densities_calculated_2020_background})
     df_2021_background = pd.DataFrame({'Date': dates_2021_background, 'Density': densities_calculated_2021_background})
     df_2023_background = pd.DataFrame({'Date': dates_2023_background, 'Density': densities_calculated_2023_background})
     df_2024_background = pd.DataFrame({'Date': dates_2024_background, 'Density': densities_calculated_2024_background})
 
     # # Zet de datumkolom als index
+    df_2019['Date'] = pd.to_datetime(df_2019['Date'])
     df_2020['Date'] = pd.to_datetime(df_2020['Date'])
     df_2021['Date'] = pd.to_datetime(df_2021['Date'])
     df_2023['Date'] = pd.to_datetime(df_2023['Date'])
     df_2024['Date'] = pd.to_datetime(df_2024['Date'])
+    df_2019_background['Date'] = pd.to_datetime(df_2019_background['Date'])
     df_2020_background['Date'] = pd.to_datetime(df_2020_background['Date'])
     df_2021_background['Date'] = pd.to_datetime(df_2021_background['Date'])
     df_2023_background['Date'] = pd.to_datetime(df_2023_background['Date'])
     df_2024_background['Date'] = pd.to_datetime(df_2024_background['Date'])
 
     #maanden aanmaken
+    df_2019['month']= df_2019['Date'].dt.month
     df_2020['month']= df_2020['Date'].dt.month
     df_2021['month']= df_2021['Date'].dt.month
     df_2023['month']= df_2023['Date'].dt.month
     df_2024['month']= df_2024['Date'].dt.month
+    df_2019_background['month']= df_2019_background['Date'].dt.month
     df_2020_background['month']= df_2020_background['Date'].dt.month
     df_2021_background['month']= df_2021_background['Date'].dt.month
     df_2023_background['month']= df_2023_background['Date'].dt.month
     df_2024_background['month']= df_2024_background['Date'].dt.month
 
     # # Groepeer per maand en bereken het maandgemiddelde
+    df_2019.set_index('Date', inplace=True)
     df_2020.set_index('Date', inplace=True)
     df_2021.set_index('Date', inplace=True)
     df_2023.set_index('Date', inplace=True)
     df_2024.set_index('Date', inplace=True)
+    df_2019_background.set_index('Date', inplace=True)
     df_2020_background.set_index('Date', inplace=True)
     df_2021_background.set_index('Date', inplace=True)
     df_2023_background.set_index('Date', inplace=True)
@@ -738,36 +746,40 @@ def airport_emission(location):
     
 
     #jaar dataframes aanmaken
+    df_2019['year']= 2019
     df_2020['year']= 2020
     df_2021['year']= 2021
     df_2023['year']= 2023
     df_2024['year']= 2024
+    df_2019_background['year']= 2019
     df_2020_background['year']= 2020
     df_2021_background['year']= 2021
     df_2023_background['year']= 2023
     df_2024_background['year']= 2024
 
     # # Bereken het maandgemiddelde van de NO₂-dichtheid
+    monthly_avg_2019 = df_2019.resample('M').mean()
     monthly_avg_2020 = df_2020.resample('M').mean()
     monthly_avg_2021 = df_2021.resample('M').mean()
     monthly_avg_2023 = df_2023.resample('M').mean()
     monthly_avg_2024 = df_2024.resample('M').mean()
+    monthly_avg_2019_background = df_2019_background.resample('M').mean()
     monthly_avg_2020_background = df_2020_background.resample('M').mean()
     monthly_avg_2021_background = df_2021_background.resample('M').mean()
     monthly_avg_2023_background = df_2023_background.resample('M').mean()
     monthly_avg_2024_background = df_2024_background.resample('M').mean()
 
     # Netto maandgemiddelde berekenen door de achtergrondwaarden af te trekken van de totale waarden
+    netto_monthly_avg_2019 = monthly_avg_2019['Density'] - monthly_avg_2019_background['Density']
     netto_monthly_avg_2020 = monthly_avg_2020['Density'] - monthly_avg_2020_background['Density']
     netto_monthly_avg_2021 = monthly_avg_2021['Density'] - monthly_avg_2021_background['Density']
     netto_monthly_avg_2023 = monthly_avg_2023['Density'] - monthly_avg_2023_background['Density']
     netto_monthly_avg_2024 = monthly_avg_2024['Density'] - monthly_avg_2024_background['Density']
-    print(monthly_avg_2021_background.head())
-    print(monthly_avg_2021.head())
     
 
     months_axis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
+    plt.plot(months_axis, monthly_avg_2019['Density'], 'o-',label='Average NO₂ 2019')
     plt.plot(months_axis, monthly_avg_2020['Density'], 'o-',label='Average NO₂ 2020')
     plt.plot(months_axis, monthly_avg_2021['Density'], 'o-',label='Average NO₂ 2021')
     plt.plot(months_axis, monthly_avg_2023['Density'], 'o-',label='Average NO₂ 2023')
@@ -782,6 +794,7 @@ def airport_emission(location):
     plt.tight_layout()
     plt.show()
 
+    plt.plot(months_axis, netto_monthly_avg_2019, 'o-',label='Average NO₂ 2019')
     plt.plot(months_axis, netto_monthly_avg_2020, 'o-',label='Average NO₂ 2020')
     plt.plot(months_axis, netto_monthly_avg_2021, 'o-',label='Average NO₂ 2021')
     plt.plot(months_axis, netto_monthly_avg_2023, 'o-',label='Average NO₂ 2023')
@@ -797,7 +810,7 @@ def airport_emission(location):
     plt.show()
 
 
-    df_big = pd.concat([df_2020, df_2021, df_2023, df_2024])
+    df_big = pd.concat([df_2019, df_2020, df_2021, df_2023, df_2024])
     sns.boxplot(df_big, x='month' , y="Density", hue="year")
     plt.show()
 
@@ -805,10 +818,12 @@ def airport_emission(location):
 
 
     # Totale uitstoot per jaar berekenen
+    total_density_2019 = df_2019['Density'].sum()
     total_density_2020 = df_2020['Density'].sum()
     total_density_2021 = df_2021['Density'].sum()
     total_density_2023 = df_2023['Density'].sum()
     total_density_2024 = df_2024['Density'].sum()
+    total_density_2019_background = df_2019_background['Density'].sum()
     total_density_2020_background = df_2020_background['Density'].sum()
     total_density_2021_background = df_2021_background['Density'].sum()
     total_density_2023_background = df_2023_background['Density'].sum()
@@ -816,9 +831,9 @@ def airport_emission(location):
 
     # Overzicht maken
     total_emissions = {
-        'Year': [2020, 2021, 2023, 2024],
-        'Total NO2 Emission': [total_density_2020, total_density_2021, total_density_2023, total_density_2024],
-        'Total NO2 Emission background': [total_density_2020_background, total_density_2021_background, total_density_2023_background, total_density_2024_background]
+        'Year': [2019, 2020, 2021, 2023, 2024],
+        'Total NO2 Emission': [total_density_2019, total_density_2020, total_density_2021, total_density_2023, total_density_2024],
+        'Total NO2 Emission background': [total_density_2019_background, total_density_2020_background, total_density_2021_background, total_density_2023_background, total_density_2024_background]
     }
 
     # Pandas DataFrame maken voor overzicht
