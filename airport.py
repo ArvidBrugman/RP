@@ -783,6 +783,16 @@ def airport_emission(location):
     df_2023_background['Date'] = pd.to_datetime(df_2023_background['Date'])
     df_2024_background['Date'] = pd.to_datetime(df_2024_background['Date'])
 
+
+     #dataframes_netto maken
+    df_netto_2019 = df_2019 - df_2019_background
+    df_netto_2020 = df_2020['Density'] - df_2020_background['Density']
+    df_netto_2021 = df_2021['Density'] - df_2021_background['Density']
+    df_netto_2023 = df_2023['Density'] - df_2023_background['Density']
+    df_netto_2024 = df_2024['Density'] - df_2024_background['Density']
+    print(df_netto_2019)
+
+
     #maanden aanmaken
     df_2019['month']= df_2019['Date'].dt.month
     df_2020['month']= df_2020['Date'].dt.month
@@ -807,6 +817,23 @@ def airport_emission(location):
     df_2023_background.set_index('Date', inplace=True)
     df_2024_background.set_index('Date', inplace=True)
     
+    df_netto_2019 = df_2019 - df_2019_background
+    df_netto_2019['month'] = df_netto_2019.index.month.astype(int)
+    df_netto_2019['year'] = df_netto_2019.index.year.astype(int)
+    df_netto_2020 = df_2020 - df_2020_background
+    df_netto_2020['month'] = df_netto_2020.index.month.astype(int)
+    df_netto_2020['year'] = df_netto_2020.index.year.astype(int)
+    df_netto_2021= df_2021-df_2021_background
+    df_netto_2021['month'] = df_netto_2021.index.month.astype(int)
+    df_netto_2021['year'] = df_netto_2021.index.year.astype(int)
+    df_netto_2023= df_2023-df_2023_background
+    df_netto_2023['month'] = df_netto_2023.index.month.astype(int)
+    df_netto_2023['year'] = df_netto_2023.index.year.astype(int)
+    df_netto_2024= df_2024-df_2024_background
+    df_netto_2024['month'] = df_netto_2024.index.month.astype(int)
+    df_netto_2024['year'] = df_netto_2024.index.year.astype(int)
+
+    print(df_netto_2019)
 
     #jaar dataframes aanmaken
     df_2019['year']= 2019
@@ -819,6 +846,7 @@ def airport_emission(location):
     df_2021_background['year']= 2021
     df_2023_background['year']= 2023
     df_2024_background['year']= 2024
+
 
     # # Bereken het maandgemiddelde van de NO₂-dichtheid
     monthly_avg_2019 = df_2019.resample('M').mean()
@@ -874,11 +902,20 @@ def airport_emission(location):
     plt.savefig(f'{location}_avg_month_NO₂_nobackground.png')
     plt.show()
 
+
+
     df_big = pd.concat([df_2019, df_2020, df_2021, df_2023, df_2024])
     plt.figure(figsize=(15, 7))
     sns.boxplot(df_big, x='month' , y="Density", hue="year")
     plt.title(f'{location} average monthly NO₂ density of the airport')
     plt.savefig(f'{location}_BP_avg_month_NO₂.png')
+    plt.show()
+
+    df_big_netto = pd.concat([df_netto_2019, df_netto_2020, df_netto_2021, df_netto_2023, df_netto_2024])
+    plt.figure(figsize=(15, 7))
+    sns.boxplot(df_big_netto, x='month' , y="Density", hue="year")
+    plt.title(f'{location} average monthly NO₂ density of the airport')
+    plt.savefig(f'{location}_BP_netto_avg_month_NO₂.png')
     plt.show()
 
     # Totale uitstoot per jaar berekenen
@@ -904,8 +941,10 @@ def airport_emission(location):
     df_total_emissions = pd.DataFrame(total_emissions)
 
 
-    print(df_total_emissions)
+    #print(df_total_emissions)
 
     # print(netto_monthly_avg_2020)
+    print(df_2019)
+    
 
 airport_emission(location="Paris")
