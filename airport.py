@@ -838,7 +838,7 @@ def airport_emission(location):
 
 
      #dataframes_netto maken
-    df_netto_2019 = df_2019 - df_2019_background
+    df_netto_2019 = df_2019['Density'] - df_2019_background['Density']
     df_netto_2020 = df_2020['Density'] - df_2020_background['Density']
     df_netto_2021 = df_2021['Density'] - df_2021_background['Density']
     df_netto_2023 = df_2023['Density'] - df_2023_background['Density']
@@ -910,6 +910,7 @@ def airport_emission(location):
     monthly_avg_2023_background = df_2023_background.resample('M').mean()
     monthly_avg_2024_background = df_2024_background.resample('M').mean()
 
+    print(monthly_avg_2019)
     # Netto maandgemiddelde berekenen door de achtergrondwaarden af te trekken van de totale waarden
     netto_monthly_avg_2019 = monthly_avg_2019['Density'] - monthly_avg_2019_background['Density']
     netto_monthly_avg_2020 = monthly_avg_2020['Density'] - monthly_avg_2020_background['Density']
@@ -993,23 +994,36 @@ def airport_emission(location):
     months_axis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     months_axis2 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov']
 
-    maanden_2019 = temp_scaled[0:12]
-    maanden_2020 = temp_scaled[12:24]
-    maanden_2021 = temp_scaled[24:36]
-    maanden_2023 = temp_scaled[36:48]
-    maanden_2024 = temp_scaled[48:60]
+    # maanden_2019 = temp_scaled[0:12]
+    # maanden_2020 = temp_scaled[12:24]
+    # maanden_2021 = temp_scaled[24:36]
+    # maanden_2023 = temp_scaled[36:48]
+    # maanden_2024 = temp_scaled[48:60]
 
+    maanden_2019 = pd.DataFrame.from_dict({'month':np.arange(1, 13, 1), 'year':np.ones((12))* 2019, 'temperature':temp_scaled[0:12]}, orient='columns')
+    maanden_2020 = pd.DataFrame.from_dict({'month':np.arange(1, 13, 1), 'year':np.ones((12))* 2020, 'temperature':temp_scaled[12:24]}, orient='columns')
+    maanden_2021 = pd.DataFrame.from_dict({'month':np.arange(1, 13, 1), 'year':np.ones((12))* 2021, 'temperature':temp_scaled[24:36]}, orient='columns')
+    maanden_2023 = pd.DataFrame.from_dict({'month':np.arange(1, 13, 1), 'year':np.ones((12))* 2023, 'temperature':temp_scaled[36:48]}, orient='columns')
+    maanden_2024 = pd.DataFrame.from_dict({'month':np.arange(1, 12, 1), 'year':np.ones((11))* 2024, 'temperature':temp_scaled[48:59]}, orient='columns')
 
-    print(maanden_2019)
-
-    plt.plot(months_axis, maanden_2019, 'o-',label='Temperature 2019')
-    plt.plot(months_axis, maanden_2020, 'o-',label='Temperature 2020')
-    plt.plot(months_axis, maanden_2021, 'o-',label='Temperature 2021')
-    plt.plot(months_axis, maanden_2023, 'o-',label='Temperature 2023')
-    plt.plot(months_axis2, maanden_2024, 'o-',label='Temperature 2024')
+    #print(maanden_2019)
+    fig = plt.figure()
+    ax = plt.subplot(1, 2, 1)
+    plt.plot(months_axis, maanden_2019['temperature'], 'o-',label='Temperature 2019')
+    plt.plot(months_axis, maanden_2020['temperature'], 'o-',label='Temperature 2020')
+    plt.plot(months_axis, maanden_2021['temperature'], 'o-',label='Temperature 2021')
+    plt.plot(months_axis, maanden_2023['temperature'], 'o-',label='Temperature 2023')
+    plt.plot(months_axis2, maanden_2024['temperature'], 'o-',label='Temperature 2024')
     plt.legend(loc = 'upper left')
     plt.title(f'{location} temperature over the years')
+    ax = plt.subplot(1, 2, 2)
+    plt.scatter(maanden_2019['temperature'], netto_monthly_avg_2019, label='2019')
+    plt.scatter(maanden_2020['temperature'], netto_monthly_avg_2020, label='2020')
+    plt.scatter(maanden_2021['temperature'], netto_monthly_avg_2021, label='2021')
+    plt.scatter(maanden_2023['temperature'], netto_monthly_avg_2023, label='2023')
+    plt.scatter(maanden_2024['temperature'], netto_monthly_avg_2024.values[0:11], label='2024')
+
     plt.savefig(f'{location}_temperature.png')
     plt.show()
 
-airport_emission(location="Paris")
+airport_emission(location="Atlanta")
