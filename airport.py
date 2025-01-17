@@ -991,8 +991,8 @@ def airport_emission(location):
     # Pandas DataFrame maken voor overzicht
     df_total_emissions = pd.DataFrame(total_emissions)
 
-    months_axis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    months_axis2 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov']
+    months_axis = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    months_axis2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
 
     # maanden_2019 = temp_scaled[0:12]
     # maanden_2020 = temp_scaled[12:24]
@@ -1014,6 +1014,7 @@ def airport_emission(location):
     plt.plot(months_axis, maanden_2021['temperature'], 'o-',label='Temperature 2021')
     plt.plot(months_axis, maanden_2023['temperature'], 'o-',label='Temperature 2023')
     plt.plot(months_axis2, maanden_2024['temperature'], 'o-',label='Temperature 2024')
+    plt.xlabel('Months')
     plt.legend(loc = 'upper left')
     plt.title(f'{location} temperature over the years')
     ax = plt.subplot(1, 2, 2)
@@ -1022,6 +1023,9 @@ def airport_emission(location):
     plt.scatter(maanden_2021['temperature'], monthly_avg_2021['Density'], label='2021')
     plt.scatter(maanden_2023['temperature'], monthly_avg_2023['Density'], label='2023')
     plt.scatter(maanden_2024['temperature'], monthly_avg_2024['Density'].values[0:11], label='2024')
+    plt.xlabel('Temperature')
+    plt.ylabel('NO₂ emissions')
+    
 
     plt.savefig(f'{location}_temperature.png')
     plt.show()
