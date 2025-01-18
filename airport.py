@@ -928,7 +928,7 @@ def airport_emission(location):
     plt.plot(months_axis, monthly_avg_2024['Density'], 'o-',label='Average NO₂ 2024')
     plt.xlabel('Date (Month-Year)')
     plt.ylabel('Average NO₂ Density (mol/m²)')
-    plt.title(f'{location} average monthly NO₂ density of the airport')
+    plt.title(f'ATL {location} - average monthly NO₂ density')
 
     # Voeg de legenda toe
     plt.legend(loc='upper left')
@@ -944,7 +944,8 @@ def airport_emission(location):
     plt.plot(months_axis, netto_monthly_avg_2024, 'o-',label='Average NO₂ 2024')
     plt.xlabel('Date (Month-Year)')
     plt.ylabel('Average NO₂ Density (mol/m²)')
-    plt.title(f'{location} average monthly NO₂ density of the airport - No background')
+    plt.title(f'ATL {location} - average monthly NO₂ density - No background')
+
 
     # Voeg de legenda toe
     plt.legend(loc='upper left')
@@ -958,14 +959,15 @@ def airport_emission(location):
     df_big = pd.concat([df_2019, df_2020, df_2021, df_2023, df_2024])
     plt.figure(figsize=(15, 7))
     sns.boxplot(df_big, x='month' , y="Density", hue="year")
-    plt.title(f'{location} average monthly NO₂ density of the airport')
+    plt.title(f'ATL {location} - average monthly NO₂ density')
+
     plt.savefig(f'{location}_BP_avg_month_NO₂.png')
     plt.show()
 
     df_big_netto = pd.concat([df_netto_2019, df_netto_2020, df_netto_2021, df_netto_2023, df_netto_2024])
     plt.figure(figsize=(15, 7))
     sns.boxplot(df_big_netto, x='month' , y="Density", hue="year")
-    plt.title(f'{location} average monthly NO₂ density of the airport')
+    plt.title(f'ATL {location} - average monthly NO₂ density - No background')
     plt.savefig(f'{location}_BP_netto_avg_month_NO₂.png')
     plt.show()
 
@@ -1016,7 +1018,9 @@ def airport_emission(location):
     plt.plot(months_axis2, maanden_2024['temperature'], 'o-',label='Temperature 2024')
     plt.xlabel('Months')
     plt.legend(loc = 'upper left')
-    plt.title(f'{location} temperature over the years')
+    plt.title(f'ATL {location} - temperature over the years')
+    plt.subplots_adjust(hspace=0.5, wspace=0.5)
+
     ax = plt.subplot(1, 2, 2)
     plt.scatter(maanden_2019['temperature'], monthly_avg_2019['Density'], label='2019')
     plt.scatter(maanden_2020['temperature'], monthly_avg_2020['Density'], label='2020')
@@ -1030,4 +1034,4 @@ def airport_emission(location):
     plt.savefig(f'{location}_temperature.png')
     plt.show()
 
-airport_emission(location="Paris")
+airport_emission(location="Atlanta")
